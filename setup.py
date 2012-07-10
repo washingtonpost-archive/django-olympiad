@@ -20,7 +20,8 @@ setup(
             'beautifulsoup4',
             'requests',
             'Django>=1.4',
-            'django-tastypie'
+            'django-tastypie',
+            'south'
         ],
         license=olympiad.__license__,
         classifiers=[
