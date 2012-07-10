@@ -88,6 +88,21 @@ class Command(BaseCommand):
                             event_dict = {}
                             cells = row.select('td')
 
+                            # Medal
+                            event_dict['medal'] = str(cells[4].select('img').attr['alt']).lower()
+
+                            # Date
+                            year = int(cells[0].split('/')[2])
+                            month = int(cells[0].split('/')[0])
+                            day = int(cells[0].split('/')[1])
+                            event_dict['date'] = datetime.date(year, month, day)
+
+                            # Record
+                            try:
+                                event_dict['record'] = str(cells[3].select('img').attr['alt']).lower()
+                            except:
+                                pass
+
                             # Olympic Game
                             try:
                                 olympic_game = OlympicGame.objects.get(id=game_id)
@@ -108,7 +123,8 @@ class Command(BaseCommand):
                             sport_name = cells[2].get_text()
                             try:
                                 sport = Sport.objects.get(name=sport_name, classification=classification)
-                            else Sport.DoesNotExist:
+                                print u'* %s' % sport
+                            except Sport.DoesNotExist:
                                 sport_dict = {}
                                 sport_dict['name'] = sport_name
                                 sport_dict['classification'] = classification
@@ -118,12 +134,14 @@ class Command(BaseCommand):
                                     pass
                                 sport = Sport(**sport_dict)
                                 sport.save()
+                                print u'+ %s' % sport
 
                             # Athlete
                             athlete_name = cells[5].get_text()
                             try:
                                 athlete = Athlete.objects.get(name=athlete_name)
-                            else Athlete.DoesNotExist:
+                                print u'* %s' % athlete
+                            except Athlete.DoesNotExist:
                                 athlete_dict = {}
                                 athlete_dict['name'] = athlete_name
                                 try:
@@ -132,12 +150,14 @@ class Command(BaseCommand):
                                     pass
                                 athlete = Athlete(**athlete_dict)
                                 athlete.save()
+                                print u'+ %s' % athlete
 
                             # Country
                             country_name = cells[6].get_text()
                             try:
                                 country = Country.objects.get(name=country_name)
-                            else Country.DoesNotExist:
+                                print u'* %s' % country
+                            except Country.DoesNotExist:
                                 country_dict = {}
                                 country_dict['name'] = country_name
                                 try:
@@ -146,26 +166,22 @@ class Command(BaseCommand):
                                     pass
                                 country = Country(**country_dict)
                                 country.save()
+                                print u'+ %s' % country
 
-                            # Medal
-                            event_dict['medal'] = str(cells[4].select('img').attr['alt']).lower()
-
-                            # Date
-                            year = int(cells[0].split('/')[2])
-                            month = int(cells[0].split('/')[0])
-                            day = int(cells[0].split('/')[1])
-                            event_dict['date'] = datetime.date(year, month, day)
-
-                            # Record
+                            # Save event.
                             try:
-                                event_dict['record'] = str(cells[3].select('img').attr['alt']).lower()
-                            except:
-                                pass
-
-
-
-
-
+                                event = Event(
+                                    olympic_game=olympic_game,
+                                    athlete=athlete,
+                                    sport=sport)
+                                print u'* %s' % event
+                            except Event.DoesNotExist:
+                                event = Event(**event_dict)
+                                event.olympic_game = olympic_game
+                                event.athlete = athlete
+                                event.sport = sport
+                                event.save()
+                                print u'+ %s' % event
 
     def build_olympic_id_list(self):
         all_games_url = u'http://www.olympic.org/olympic-games'
