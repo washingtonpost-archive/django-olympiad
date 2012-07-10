@@ -21,7 +21,7 @@ setup(
             'requests',
             'Django>=1.4',
             'django-tastypie',
-            'south'
+            'south',
         ],
         license=olympiad.__license__,
         classifiers=[

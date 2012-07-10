@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.template.defaultfilters import slugify
 
 CLASSIFICATION_CHOICES = (
     ('team', 'Team sport'),
@@ -12,8 +12,8 @@ SEASON_CHOICES = (
 )
 
 RECORD_CHOICES = (
-    ('world_record', 'World Record'),
-    ('olympic_record', 'Olympic Record'),
+    ('world', 'World Record'),
+    ('olympic', 'Olympic Record'),
 )
 
 MEDAL_CHOICES = (
@@ -29,10 +29,15 @@ class Sport(models.Model):
     classification = models.CharField(
         max_length=255,
         choices=CLASSIFICATION_CHOICES)
-    olympic_detail_url = models.TextField(blank=True, null=True)
+    sport_detail_url = models.TextField(blank=True, null=True)
 
     def __unicode__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.__unicode__())
+        return super(Sport, self).save(*args, **kwargs)
 
 
 class OlympicGame(models.Model):
@@ -48,6 +53,11 @@ class OlympicGame(models.Model):
     def __unicode__(self):
         return u'%s %s' % (self.year, self.location)
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.__unicode__())
+        return super(OlympicGame, self).save(*args, **kwargs)
+
 
 class Country(models.Model):
     name = models.CharField(max_length=255)
@@ -62,10 +72,16 @@ class Country(models.Model):
     def __unicode__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.__unicode__())
+        return super(Country, self).save(*args, **kwargs)
+
 
 class Athlete(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255)
+    athlete_detail_url = models.TextField(blank=True, null=True)
     total_gold = models.IntegerField(default=0)
     total_silver = models.IntegerField(default=0)
     total_bronze = models.IntegerField(default=0)
@@ -74,6 +90,11 @@ class Athlete(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.__unicode__())
+        return super(Athlete, self).save(*args, **kwargs)
 
 
 class AthleteOlympicGame(models.Model):
@@ -89,6 +110,11 @@ class AthleteOlympicGame(models.Model):
     def __unicode__(self):
         return u'%s %s %s' % (self.athlete, self.country, self.olympic_game)
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.__unicode__())
+        return super(AthleteOlympicGame, self).save(*args, **kwargs)
+
 
 class CountryOlympicGame(models.Model):
     country = models.ForeignKey(Country)
@@ -101,6 +127,11 @@ class CountryOlympicGame(models.Model):
 
     def __unicode__(self):
         return u'%s %s' % (self.country, self.olympic_game)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.__unicode__())
+        return super(CountryOlympicGame, self).save(*args, **kwargs)
 
 
 class Event(models.Model):
@@ -122,3 +153,8 @@ class Event(models.Model):
             self.olympic_game,
             self.country
         )
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.__unicode__())
+        return super(Event, self).save(*args, **kwargs)
