@@ -17,4 +17,6 @@ class Command(BaseCommand):
         soup = BeautifulSoup(request.content)
 
         link_list = soup.select('.iocRiaContent')[0].select('li span a')
-        print link_list
+        for link in link_list:
+            olympic_url = link.attr['href']
+            print olympic_url
