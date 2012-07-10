@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from django.core.management.base import BaseCommand
-from olympiad import Event, Athlete, Country, OlympicGame, Sport
+from olympiad.models import Event, Athlete, Country, OlympicGame, Sport
 
 class Command(BaseCommand):
 
