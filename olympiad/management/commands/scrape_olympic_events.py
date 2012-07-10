@@ -16,5 +16,5 @@ class Command(BaseCommand):
         request = requests.get(all_games_url)
         soup = BeautifulSoup(request.content)
 
-        link_list = soup.select('iocRiaContent').select('li').select('a')
+        link_list = soup.select('iocRiaContent')[0].select('li span a')
         print link_list
