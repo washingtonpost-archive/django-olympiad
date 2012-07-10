@@ -43,6 +43,7 @@ class OlympicGame(models.Model):
         max_length=255,
         choices=SEASON_CHOICES)
     olympic_detail_url = models.TextField(blank=True, null=True)
+    olympic_id = models.IntegerField(null=True, blank=True)
 
     def __unicode__(self):
         return u'%s %s' % (self.year, self.location)
