@@ -41,12 +41,8 @@ class Command(BaseCommand):
                     if not ag.country:
                         ag.country = event.country
 
-                if ag.country:
-                    ag.save()
-                    print ag, ag.medals
-                else:
-                    print ag.__dict__
-                    self.integrity_errors.append(ag.__dict__)
+                ag.save()
+                print ag, ag.medals
 
     def aggregate_country_games(self):
 
