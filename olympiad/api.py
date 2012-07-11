@@ -2,7 +2,8 @@ from tastypie.resources import ModelResource
 from tastypie import fields
 from tastypie.api import Api
 from tastypie.constants import ALL, ALL_WITH_RELATIONS
-from olympiad.models import Athlete, Country, OlympicGame, Sport, Event
+from olympiad.models import (Event, Athlete, Country, OlympicGame,
+    Sport, AthleteOlympicGame, CountryOlympicGame)
 
 
 class SportResource(ModelResource):
@@ -53,12 +54,13 @@ class AthleteResource(ModelResource):
 
     def dehydrate_games(self, bundle):
         games_list = []
-        for game in AthleteGame.objects.filter(athlete=bundle.obj):
+        for game in AthleteOlympicGame.objects.filter(athlete=bundle.obj):
             game_dict = {}
             game_dict['medals'] = game.medals
             game_dict['olympic_game'] = game.olympic_game.location
             games_list.append(game_dict)
         return games_list
+
 
 class CountryResource(ModelResource):
     class Meta:
@@ -72,6 +74,15 @@ class CountryResource(ModelResource):
 
     def dehydrate_id(self, bundle):
         return int(bundle.obj.id)
+
+    def dehydrate_games(self, bundle):
+        games_list = []
+        for game in CountryOlympicGame.objects.filter(country=bundle.obj):
+            game_dict = {}
+            game_dict['medals'] = game.medals
+            game_dict['olympic_game'] = game.olympic_game.location
+            games_list.append(game_dict)
+        return games_list
 
 
 class EventResource(ModelResource):
