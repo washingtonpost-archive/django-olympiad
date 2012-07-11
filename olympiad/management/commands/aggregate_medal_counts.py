@@ -17,6 +17,7 @@ class Command(BaseCommand):
         # self.aggregate_country_totals()
         self.aggregate_athlete_games()
         # self.aggregate_country_games()
+        print self.integrity_errors
 
     def aggregate_athlete_games(self):
         for game in OlympicGame.objects.all():
