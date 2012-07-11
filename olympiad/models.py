@@ -148,9 +148,10 @@ class Event(models.Model):
         choices=MEDAL_CHOICES)
 
     def __unicode__(self):
-        return u'%s: %s %s' % (
+        return u'%s: %s %s %s' % (
             self.medal,
-            self.olympic_game,
+            self.sport,
+            self.date.date(),
             self.country
         )
 

@@ -136,6 +136,7 @@ class Command(BaseCommand):
                                 print u'+ Sport: %s' % sport
 
                             # Athlete
+                            athlete = None
                             if classification == 'individual':
                                 athlete_name = cells[5].get_text()
                                 try:
@@ -170,18 +171,12 @@ class Command(BaseCommand):
 
                             # Save event.
                             try:
-                                if classification == "individual":
-                                    event = Event(
-                                        olympic_game=olympic_game,
-                                        athlete=athlete,
-                                        sport=sport,
-                                        country=country)
-                                else:
-                                    event = Event(
-                                        olympic_game=olympic_game,
-                                        medal=event_dict['medal'],
-                                        sport=sport,
-                                        country=country)
+                                event = Event.objects.get(
+                                    olympic_game=olympic_game,
+                                    athlete=athlete,
+                                    medal=event_dict['medal'],
+                                    sport=sport,
+                                    country=country)
                                 print u'* Event: %s' % event
                             except Event.DoesNotExist:
                                 event = Event(**event_dict)
