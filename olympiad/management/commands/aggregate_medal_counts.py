@@ -15,8 +15,8 @@ class Command(BaseCommand):
 
         # self.aggregate_athlete_totals()
         # self.aggregate_country_totals()
-        self.aggregate_country_games()
-        # self.aggregate_athlete_games()
+        # self.aggregate_country_games()
+        self.aggregate_athlete_games()
         print self.integrity_errors
 
     def aggregate_athlete_games(self):
@@ -45,6 +45,7 @@ class Command(BaseCommand):
                     ag.save()
                     print ag, ag.medals
                 else:
+                    print ag.__dict__
                     self.integrity_errors.append(ag.__dict__)
 
     def aggregate_country_games(self):
