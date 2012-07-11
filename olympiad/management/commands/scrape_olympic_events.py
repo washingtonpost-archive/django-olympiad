@@ -175,7 +175,8 @@ class Command(BaseCommand):
                             except Event.DoesNotExist:
                                 event = Event(**event_dict)
                                 event.olympic_game = olympic_game
-                                event.athlete = athlete
+                                if classification is 'individual':
+                                    event.athlete = athlete
                                 event.sport = sport
                                 event.save()
                                 print u'+ %s' % event
