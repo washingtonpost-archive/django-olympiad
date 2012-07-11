@@ -138,14 +138,14 @@ class Event(models.Model):
     date = models.DateField()
     olympic_game = models.ForeignKey(OlympicGame)
     sport = models.ForeignKey(Sport)
+    athlete = models.ForeignKey(Athlete, blank=True, null=True)
+    country = models.ForeignKey(Country)
     record = models.CharField(
         max_length=255,
         choices=RECORD_CHOICES)
     medal = models.CharField(
         max_length=255,
         choices=MEDAL_CHOICES)
-    athlete = models.ForeignKey(Athlete, blank=True, null=True)
-    country = models.ForeignKey(Country)
 
     def __unicode__(self):
         return u'%s: %s %s' % (

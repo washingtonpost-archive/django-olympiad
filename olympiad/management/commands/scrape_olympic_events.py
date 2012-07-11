@@ -103,6 +103,7 @@ class Command(BaseCommand):
                             # Olympic Game
                             try:
                                 olympic_game = OlympicGame.objects.get(id=game_id)
+                                print u'* Game: %s' % olympic_game
                             except OlympicGame.DoesNotExist:
                                 olympic_game_dict = {}
                                 olympic_game_dict['id'] = game_id
@@ -115,12 +116,13 @@ class Command(BaseCommand):
                                     olympic_game_dict['season'] = 'winter'
                                 olympic_game = OlympicGame(**olympic_game_dict)
                                 olympic_game.save()
+                                print u'+ Game: %s' % olympic_game
 
                             # Sport
                             sport_name = cells[2].get_text()
                             try:
                                 sport = Sport.objects.get(name=sport_name, classification=classification)
-                                print u'* %s' % sport
+                                print u'* Sport: %s' % sport
                             except Sport.DoesNotExist:
                                 sport_dict = {}
                                 sport_dict['name'] = sport_name
@@ -131,14 +133,14 @@ class Command(BaseCommand):
                                     pass
                                 sport = Sport(**sport_dict)
                                 sport.save()
-                                print u'+ %s' % sport
+                                print u'+ Sport: %s' % sport
 
                             # Athlete
                             if classification == 'individual':
                                 athlete_name = cells[5].get_text()
                                 try:
                                     athlete = Athlete.objects.get(name=athlete_name)
-                                    print u'* %s' % athlete
+                                    print u'* Athlete: %s' % athlete
                                 except Athlete.DoesNotExist:
                                     athlete_dict = {}
                                     athlete_dict['name'] = athlete_name
@@ -148,13 +150,13 @@ class Command(BaseCommand):
                                         pass
                                     athlete = Athlete(**athlete_dict)
                                     athlete.save()
-                                    print u'+ %s' % athlete
+                                    print u'+ Athlete: %s' % athlete
 
                             # Country
                             country_name = cells[6].get_text()
                             try:
                                 country = Country.objects.get(name=country_name)
-                                print u'* %s' % country
+                                print u'* Country: %s' % country
                             except Country.DoesNotExist:
                                 country_dict = {}
                                 country_dict['name'] = country_name
@@ -164,7 +166,7 @@ class Command(BaseCommand):
                                     pass
                                 country = Country(**country_dict)
                                 country.save()
-                                print u'+ %s' % country
+                                print u'+ Country: %s' % country
 
                             # Save event.
                             try:
@@ -172,20 +174,22 @@ class Command(BaseCommand):
                                     event = Event(
                                         olympic_game=olympic_game,
                                         athlete=athlete,
-                                        sport=sport)
+                                        sport=sport,
+                                        country=country)
                                 else:
                                     event = Event(
                                         olympic_game=olympic_game,
                                         medal=event_dict['medal'],
-                                        sport=sport)
+                                        sport=sport,
+                                        country=country)
                                 print u'* %s' % event
                             except Event.DoesNotExist:
                                 event = Event(**event_dict)
                                 event.olympic_game = olympic_game
-                                if classification == 'individual':
-                                    event.athlete = athlete
                                 event.sport = sport
                                 event.country = country
+                                if classification == 'individual':
+                                    event.athlete = athlete
                                 event.save()
                                 print u'+ %s' % event
 
