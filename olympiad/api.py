@@ -10,6 +10,11 @@ class SportResource(ModelResource):
         queryset = Sport.objects.all()
         resource_name = 'sport'
         allowed_methods = ['get', ]
+        filtering = {
+            'name': ALL,
+            'classification': ALL,
+        }
+        ordering = filtering
 
 
 class OlympicGameResource(ModelResource):
@@ -17,6 +22,12 @@ class OlympicGameResource(ModelResource):
         queryset = OlympicGame.objects.all()
         resource_name = 'game'
         allowed_methods = ['get', ]
+        filtering = {
+            'location': ALL,
+            'year': ALL,
+            'season': ALL,
+        }
+        ordering = filtering
 
 
 class AthleteResource(ModelResource):
@@ -24,6 +35,10 @@ class AthleteResource(ModelResource):
         queryset = Athlete.objects.all()
         resource_name = 'athlete'
         allowed_methods = ['get', ]
+        filtering = {
+            'name': ALL,
+        }
+        ordering = filtering
 
 
 class CountryResource(ModelResource):
@@ -31,6 +46,10 @@ class CountryResource(ModelResource):
         queryset = Country.objects.all()
         resource_name = 'country'
         allowed_methods = ['get', ]
+        filtering = {
+            'name': ALL,
+        }
+        ordering = filtering
 
 
 class EventResource(ModelResource):
@@ -63,6 +82,7 @@ class EventResource(ModelResource):
             'medal': ALL,
             'record': ALL,
         }
+        ordering = filtering
 
 v1 = Api(api_name='v1')
 v1.register(EventResource())
