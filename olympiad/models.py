@@ -62,7 +62,7 @@ class OlympicGame(models.Model):
 class Country(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255)
-    olympic_detail_url = models.TextField(blank=True, null=True)
+    country_detail_url = models.TextField(blank=True, null=True)
     total_gold = models.IntegerField(default=0)
     total_silver = models.IntegerField(default=0)
     total_bronze = models.IntegerField(default=0)
