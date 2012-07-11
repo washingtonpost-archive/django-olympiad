@@ -1,7 +1,7 @@
 from tastypie.resources import ModelResource
 from tastypie import fields
 from tastypie.api import Api
-# from tastypie.constants import ALL, ALL_WITH_RELATIONS
+from tastypie.constants import ALL, ALL_WITH_RELATIONS
 from olympiad.models import Athlete, Country, OlympicGame, Sport, Event
 
 
@@ -55,6 +55,14 @@ class EventResource(ModelResource):
         queryset = Event.objects.all()
         resource_name = 'event'
         allowed_methods = ['get', ]
+        filtering = {
+            'athlete': ALL_WITH_RELATIONS,
+            'country': ALL_WITH_RELATIONS,
+            'sport': ALL_WITH_RELATIONS,
+            'olympic_game': ALL_WITH_RELATIONS,
+            'medal': ALL,
+            'record': ALL,
+        }
 
 v1 = Api(api_name='v1')
 v1.register(EventResource())
