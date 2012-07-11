@@ -69,7 +69,7 @@ class Command(BaseCommand):
                 if result_count % 250 > 0:
                     pages += 1
 
-                for page in range(1, pages+1):
+                for page in range(1, pages + 1):
                     request = requests.get(
                         self.base_detail_url\
                         + classy_url\
@@ -87,7 +87,7 @@ class Command(BaseCommand):
                             cells = row.select('td')
 
                             # Medal
-                            event_dict['medal'] = str(cells[4].select('img').attr['alt']).lower()
+                            event_dict['medal'] = str(cells[4].select('img')[0].attr['alt']).lower()
 
                             # Date
                             year = int(cells[0].split('/')[2])
@@ -97,7 +97,7 @@ class Command(BaseCommand):
 
                             # Record
                             try:
-                                event_dict['record'] = str(cells[3].select('img').attr['alt']).lower()
+                                event_dict['record'] = str(cells[3].select('img')[0].attr['alt']).lower()
                             except:
                                 pass
 
@@ -127,7 +127,7 @@ class Command(BaseCommand):
                                 sport_dict['name'] = sport_name
                                 sport_dict['classification'] = classification
                                 try:
-                                    sport_dict['sport_detail_url'] = cells[2].select('a').attr['href']
+                                    sport_dict['sport_detail_url'] = cells[2].select('a')[0].attr['href']
                                 except:
                                     pass
                                 sport = Sport(**sport_dict)
@@ -143,7 +143,7 @@ class Command(BaseCommand):
                                 athlete_dict = {}
                                 athlete_dict['name'] = athlete_name
                                 try:
-                                    athlete_dict['athlete_detail_url'] = cells[5].select('a').attr['href']
+                                    athlete_dict['athlete_detail_url'] = cells[5].select('a')[0].attr['href']
                                 except:
                                     pass
                                 athlete = Athlete(**athlete_dict)
@@ -159,7 +159,7 @@ class Command(BaseCommand):
                                 country_dict = {}
                                 country_dict['name'] = country_name
                                 try:
-                                    country_dict['country_detail_url'] = cells[6].select('a').attr['href']
+                                    country_dict['country_detail_url'] = cells[6].select('a')[0].attr['href']
                                 except:
                                     pass
                                 country = Country(**country_dict)
