@@ -128,11 +128,6 @@ class AthleteOlympicGame(models.Model):
     def __unicode__(self):
         return u'%s %s %s' % (self.athlete, self.country, self.olympic_game)
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.__unicode__())
-        return super(AthleteOlympicGame, self).save(*args, **kwargs)
-
     @property
     def medals(self):
         return {
@@ -154,11 +149,6 @@ class CountryOlympicGame(models.Model):
 
     def __unicode__(self):
         return u'%s %s' % (self.country, self.olympic_game)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.__unicode__())
-        return super(CountryOlympicGame, self).save(*args, **kwargs)
 
     @property
     def medals(self):
