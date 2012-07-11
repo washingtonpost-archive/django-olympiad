@@ -154,8 +154,3 @@ class Event(models.Model):
             self.date.date(),
             self.country
         )
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.__unicode__())
-        return super(Event, self).save(*args, **kwargs)
