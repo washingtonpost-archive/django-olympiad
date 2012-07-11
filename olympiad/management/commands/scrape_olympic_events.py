@@ -78,6 +78,11 @@ class Command(BaseCommand):
 
                     soup = BeautifulSoup(request.content)
 
+                    print self.base_detail_url\
+                        + classy_url\
+                        + '&games=%s' % game_id\
+                        + '&resultspage=%s' % page
+
                     odd_rows = soup.select('tr.iocResultsDataSearchResultsTableLine')
                     even_rows = soup.select('tr.iocResultsDataSearchResultsTableAlternateLine')
 
