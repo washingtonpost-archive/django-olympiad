@@ -51,7 +51,7 @@ class OlympicGame(models.Model):
     olympic_id = models.IntegerField(null=True, blank=True)
 
     def __unicode__(self):
-        return u'%s %s' % (self.year, self.location)
+        return self.location
 
     def save(self, *args, **kwargs):
         if not self.slug:
