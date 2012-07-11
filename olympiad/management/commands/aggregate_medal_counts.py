@@ -40,9 +40,11 @@ class Command(BaseCommand):
 
                     if not ag.country:
                         ag.country = event.country
-
-                ag.save()
-                print ag, ag.medals
+                if ag.total_gold == ag.total_silver == ag.total_bronze == 0:
+                    pass
+                else:
+                    ag.save()
+                    print ag, ag.medals
 
     def aggregate_country_games(self):
 
