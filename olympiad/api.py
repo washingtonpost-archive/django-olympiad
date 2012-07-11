@@ -46,6 +46,7 @@ class AthleteResource(ModelResource):
         allowed_methods = ['get', ]
         filtering = {
             'name': ALL,
+            'slug': ALL,
         }
         ordering = filtering
 
@@ -71,6 +72,7 @@ class CountryResource(ModelResource):
         allowed_methods = ['get', ]
         filtering = {
             'name': ALL,
+            'slug': ALL,
         }
         ordering = filtering
 
