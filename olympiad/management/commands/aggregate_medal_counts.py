@@ -25,13 +25,10 @@ class Command(BaseCommand):
 
         for game in OlympicGame.objects.all():
             for athlete in Athlete.objects.all():
-                try:
-                    ag = AthleteOlympicGame.objects.get(athlete=athlete,
-                        olympic_game=game)
-                except AthleteOlympicGame.DoesNotExist:
-                    ag = AthleteOlympicGame()
-                    ag.athlete = athlete
-                    ag.olympic_game = game
+                ag = AthleteOlympicGame()
+                ag.athlete = athlete
+                ag.olympic_game = game
+                ag.country = None
 
                 for event in Event.objects.filter(athlete=athlete, olympic_game=game):
                     if event.medal.lower() == 'gold':
@@ -41,14 +38,14 @@ class Command(BaseCommand):
                     if event.medal.lower() == 'bronze':
                         ag.total_bronze += 1
 
-                    ag.country = event.country
+                    if not ag.country:
+                        ag.country = event.country
 
-                if ag.country != None:
+                if ag.country:
                     ag.save()
                     print ag, ag.medals
                 else:
                     self.integrity_errors.append(ag.__dict__)
-                    pass
 
     def aggregate_country_games(self):
 
@@ -56,13 +53,9 @@ class Command(BaseCommand):
 
         for game in OlympicGame.objects.all():
             for country in Country.objects.all():
-                try:
-                    cg = CountryOlympicGame.objects.get(country=country,
-                        olympic_game=game)
-                except CountryOlympicGame.DoesNotExist:
-                    cg = CountryOlympicGame()
-                    cg.country = country
-                    cg.olympic_game = game
+                cg = CountryOlympicGame()
+                cg.country = country
+                cg.olympic_game = game
 
                 for event in Event.objects.filter(country=country, olympic_game=game):
                     if event.medal.lower() == 'gold':
