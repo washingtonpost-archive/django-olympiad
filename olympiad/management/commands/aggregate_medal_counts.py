@@ -21,11 +21,11 @@ class Command(BaseCommand):
             for event in Event.objects.filter(athlete=athlete):
                 try:
                     ag = AthleteOlympicGame.objects.get(athlete=athlete,
-                        olympic_game=event.game)
+                        olympic_game=event.olympic_game)
                 except AthleteOlympicGame.DoesNotExist:
                     ag = AthleteOlympicGame()
                     ag.athlete = athlete
-                    ag.olympic_game = event.game
+                    ag.olympic_game = event.olympic_game
                     ag.country = event.country
 
             if event.medal.lower() == 'gold':
