@@ -117,7 +117,7 @@ class Athlete(models.Model):
 
 class AthleteOlympicGame(models.Model):
     athlete = models.ForeignKey(Athlete)
-    country = models.ForeignKey(Country)
+    country = models.ForeignKey(Country, null=True)
     olympic_game = models.ForeignKey(OlympicGame)
     total_gold = models.IntegerField(default=0)
     total_silver = models.IntegerField(default=0)
