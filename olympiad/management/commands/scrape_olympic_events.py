@@ -47,11 +47,9 @@ class Command(BaseCommand):
                 pages = 1
 
                 if classification is "individual":
-                    classy_url = "&teamclassification=false\
-                        &individualclassification=true"
+                    classy_url = "&teamclassification=false&individualclassification=true"
                 else:
-                    classy_url = "&teamclassification=true\
-                        &individualclassification=false"
+                    classy_url = "&teamclassification=true&individualclassification=false"
 
                 request = requests.get(
                     self.base_detail_url\
