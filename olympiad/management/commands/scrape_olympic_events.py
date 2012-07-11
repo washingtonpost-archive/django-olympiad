@@ -168,10 +168,16 @@ class Command(BaseCommand):
 
                             # Save event.
                             try:
-                                event = Event(
-                                    olympic_game=olympic_game,
-                                    athlete=athlete,
-                                    sport=sport)
+                                if classification == "individual":
+                                    event = Event(
+                                        olympic_game=olympic_game,
+                                        athlete=athlete,
+                                        sport=sport)
+                                else:
+                                    event = Event(
+                                        olympic_game=olympic_game,
+                                        medal=event_dict['medal'],
+                                        sport=sport)
                                 print u'* %s' % event
                             except Event.DoesNotExist:
                                 event = Event(**event_dict)
