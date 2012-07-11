@@ -185,6 +185,7 @@ class Command(BaseCommand):
                                 if classification == 'individual':
                                     event.athlete = athlete
                                 event.sport = sport
+                                event.country = country
                                 event.save()
                                 print u'+ %s' % event
 
