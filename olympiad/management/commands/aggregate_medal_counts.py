@@ -28,6 +28,7 @@ class Command(BaseCommand):
                         ag = AthleteOlympicGame()
                         ag.athlete = athlete
                         ag.olympic_game = game
+                        ag.country = event.country
 
                 if event.medal.lower() == 'gold':
                     ag.total_gold += 1
