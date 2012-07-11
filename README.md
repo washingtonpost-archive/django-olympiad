@@ -14,7 +14,6 @@ Medal counts are the bane of the news developer's existence. Don't fret. Django-
 
 ## RoadMap
 
-* Finish aggregator
 * Tests
 * More tests
 
