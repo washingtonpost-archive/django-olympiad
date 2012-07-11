@@ -27,11 +27,7 @@ class Command(BaseCommand):
 
     olympic_css = '#ctl00_mainContent_TopAthletesBlock1_AllAthletesLink_LinkText'
     result_css = '#ctl00_mainContent_ResultsDataSearchResultsBlock_lblResultsCount'
-    base_detail_url = "http://www.olympic.org/medallists-results?athletename=&category=1&sport=\
-    &event=&mengender=false&womengender=false&mixedgender=false&continent=\
-    &country=&goldmedal=false&silvermedal=false&bronzemedal=false\
-    &targetresults=true&worldrecord=false&olympicrecord=false\
-    &resultspageipp=250"
+    base_detail_url = "http://www.olympic.org/medallists-results?athletename=&category=1&sport=&event=&mengender=false&womengender=false&mixedgender=false&continent=&country=&goldmedal=false&silvermedal=false&bronzemedal=false&targetresults=true&worldrecord=false&olympicrecord=false&resultspageipp=250"
 
     def handle(self, *args, **kwargs):
 
