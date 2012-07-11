@@ -151,6 +151,6 @@ class Event(models.Model):
         return u'%s: %s %s %s' % (
             self.medal,
             self.sport,
-            self.date.date(),
+            self.date.year(),
             self.country
         )
