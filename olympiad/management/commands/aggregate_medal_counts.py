@@ -13,30 +13,31 @@ class Command(BaseCommand):
 
         # self.aggregate_athlete_totals()
         # self.aggregate_country_totals()
-        # self.aggregate_athlete_games()
-        self.aggregate_country_games()
+        self.aggregate_athlete_games()
+        # self.aggregate_country_games()
 
-    # def aggregate_athlete_games(self):
-    #     for athlete in Athlete.objects.all():
-    #         for event in Event.objects.filter(athlete=athlete):
-    #             try:
-    #                 ag = AthleteOlympicGame.objects.get(athlete=athlete,
-    #                     olympic_game=event.olympic_game)
-    #             except AthleteOlympicGame.DoesNotExist:
-    #                 ag = AthleteOlympicGame()
-    #                 ag.athlete = athlete
-    #                 ag.olympic_game = event.olympic_game
-    #                 ag.country = event.country
+    def aggregate_athlete_games(self):
+        for game in OlympicGame.objects.all():
+            for athlete in Athlete.objects.all():
+                try:
+                    ag = AthleteOlympicGame.objects.get(athlete=athlete,
+                        olympic_game=game)
+                except AthleteOlympicGame.DoesNotExist:
+                    ag = AthleteOlympicGame()
+                    ag.athlete = athlete
+                    ag.olympic_game = game
 
-    #         if event.medal.lower() == 'gold':
-    #             ag.total_gold += 1
-    #         if event.medal.lower() == 'silver':
-    #             ag.total_silver += 1
-    #         if event.medal.lower() == 'bronze':
-    #             ag.total_bronze += 1
+                for event in Event.objects.filter(athlete=athlete, olympic_game=game):
+                    if event.medal.lower() == 'gold':
+                        ag.total_gold += 1
+                    if event.medal.lower() == 'silver':
+                        ag.total_silver += 1
+                    if event.medal.lower() == 'bronze':
+                        ag.total_bronze += 1
+                    ag.country = event.country
 
-    #         ag.save()
-    #         print ag, ag.medals
+                ag.save()
+                print ag, ag.medals
 
     def aggregate_country_games(self):
         for game in OlympicGame.objects.all():
