@@ -41,12 +41,12 @@ class Command(BaseCommand):
 
     def scrape_olympic_events(self):
         for game_id in self.olympic_ids:
-            for classification in ['team', 'individual']:
+            for classification in ["team", "individual"]:
 
                 result_count = 0
                 pages = 1
 
-                if classification is "individual":
+                if classification == "individual":
                     classy_url = "&teamclassification=false&individualclassification=true"
                 else:
                     classy_url = "&teamclassification=true&individualclassification=false"
@@ -134,20 +134,21 @@ class Command(BaseCommand):
                                 print u'+ %s' % sport
 
                             # Athlete
-                            athlete_name = cells[5].get_text()
-                            try:
-                                athlete = Athlete.objects.get(name=athlete_name)
-                                print u'* %s' % athlete
-                            except Athlete.DoesNotExist:
-                                athlete_dict = {}
-                                athlete_dict['name'] = athlete_name
+                            if classification == 'individual':
+                                athlete_name = cells[5].get_text()
                                 try:
-                                    athlete_dict['athlete_detail_url'] = cells[5].select('a')[0].attrs['href']
-                                except:
-                                    pass
-                                athlete = Athlete(**athlete_dict)
-                                athlete.save()
-                                print u'+ %s' % athlete
+                                    athlete = Athlete.objects.get(name=athlete_name)
+                                    print u'* %s' % athlete
+                                except Athlete.DoesNotExist:
+                                    athlete_dict = {}
+                                    athlete_dict['name'] = athlete_name
+                                    try:
+                                        athlete_dict['athlete_detail_url'] = cells[5].select('a')[0].attrs['href']
+                                    except:
+                                        pass
+                                    athlete = Athlete(**athlete_dict)
+                                    athlete.save()
+                                    print u'+ %s' % athlete
 
                             # Country
                             country_name = cells[6].get_text()
@@ -175,7 +176,7 @@ class Command(BaseCommand):
                             except Event.DoesNotExist:
                                 event = Event(**event_dict)
                                 event.olympic_game = olympic_game
-                                if classification is 'individual':
+                                if classification == 'individual':
                                     event.athlete = athlete
                                 event.sport = sport
                                 event.save()
