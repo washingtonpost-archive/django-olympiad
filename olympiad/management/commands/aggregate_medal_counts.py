@@ -43,10 +43,10 @@ class Command(BaseCommand):
 
                     ag.country = event.country
 
-                try:
+                if ag.country != None:
                     ag.save()
                     print ag, ag.medals
-                except:
+                else:
                     self.integrity_errors.append(ag.__dict__)
                     pass
 
