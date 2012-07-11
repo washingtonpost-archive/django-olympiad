@@ -20,6 +20,9 @@ class Command(BaseCommand):
         print self.integrity_errors
 
     def aggregate_athlete_games(self):
+
+        AthleteOlympicGame.objects.all().delete()
+
         for game in OlympicGame.objects.all():
             for athlete in Athlete.objects.all():
                 try:
@@ -48,6 +51,9 @@ class Command(BaseCommand):
                     pass
 
     def aggregate_country_games(self):
+
+        CountryOlympicGame.objects.all().delete()
+
         for game in OlympicGame.objects.all():
             for country in Country.objects.all():
                 try:
