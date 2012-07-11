@@ -85,17 +85,13 @@ class Command(BaseCommand):
                             event_dict = {}
                             cells = row.select('td')
 
-                            print cells[4].select('img')
-                            print cells[4].select('img')[0]
-                            print cells[4].select('img')[0].attrs['alt']
-
                             # Medal
                             event_dict['medal'] = str(cells[4].select('img')[0].attrs['alt']).lower()
 
                             # Date
-                            year = int(cells[0].split('/')[2])
-                            month = int(cells[0].split('/')[0])
-                            day = int(cells[0].split('/')[1])
+                            year = int(cells[0].get_text().split('/')[2])
+                            month = int(cells[0].get_text().split('/')[0])
+                            day = int(cells[0].get_text().split('/')[1])
                             event_dict['date'] = datetime.date(year, month, day)
 
                             # Record
