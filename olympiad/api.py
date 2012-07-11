@@ -38,7 +38,7 @@ class OlympicGameResource(ModelResource):
 
 
 class AthleteResource(ModelResource):
-    games = fields.CharField()
+    athlete_games = fields.CharField()
 
     class Meta:
         queryset = Athlete.objects.all()
@@ -52,7 +52,7 @@ class AthleteResource(ModelResource):
     def dehydrate_id(self, bundle):
         return int(bundle.obj.id)
 
-    def dehydrate_games(self, bundle):
+    def dehydrate_athlete_games(self, bundle):
         games_list = []
         for game in AthleteOlympicGame.objects.filter(athlete=bundle.obj):
             game_dict = {}
@@ -63,6 +63,8 @@ class AthleteResource(ModelResource):
 
 
 class CountryResource(ModelResource):
+    country_games = fields.CharField()
+
     class Meta:
         queryset = Country.objects.all()
         resource_name = 'country'
@@ -75,7 +77,7 @@ class CountryResource(ModelResource):
     def dehydrate_id(self, bundle):
         return int(bundle.obj.id)
 
-    def dehydrate_games(self, bundle):
+    def dehydrate_country_games(self, bundle):
         games_list = []
         for game in CountryOlympicGame.objects.filter(country=bundle.obj):
             game_dict = {}
