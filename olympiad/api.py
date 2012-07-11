@@ -16,6 +16,9 @@ class SportResource(ModelResource):
         }
         ordering = filtering
 
+    def dehydrate_id(self, bundle):
+        return int(bundle.obj.id)
+
 
 class OlympicGameResource(ModelResource):
     class Meta:
@@ -29,6 +32,9 @@ class OlympicGameResource(ModelResource):
         }
         ordering = filtering
 
+    def dehydrate_id(self, bundle):
+        return int(bundle.obj.id)
+
 
 class AthleteResource(ModelResource):
     class Meta:
@@ -40,6 +46,9 @@ class AthleteResource(ModelResource):
         }
         ordering = filtering
 
+    def dehydrate_id(self, bundle):
+        return int(bundle.obj.id)
+
 
 class CountryResource(ModelResource):
     class Meta:
@@ -50,6 +59,9 @@ class CountryResource(ModelResource):
             'name': ALL,
         }
         ordering = filtering
+
+    def dehydrate_id(self, bundle):
+        return int(bundle.obj.id)
 
 
 class EventResource(ModelResource):
@@ -83,6 +95,9 @@ class EventResource(ModelResource):
             'record': ALL,
         }
         ordering = filtering
+
+    def dehydrate_id(self, bundle):
+        return int(bundle.obj.id)
 
 v1 = Api(api_name='v1')
 v1.register(EventResource())
