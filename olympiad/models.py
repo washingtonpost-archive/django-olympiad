@@ -77,6 +77,15 @@ class Country(models.Model):
             self.slug = slugify(self.__unicode__())
         return super(Country, self).save(*args, **kwargs)
 
+    @property
+    def medals(self):
+        return {
+            'total': self.total_gold + self.total_silver + self.total_bronze,
+            'gold': self.total_gold,
+            'silver': self.total_silver,
+            'bronze': self.total_bronze
+        }
+
 
 class Athlete(models.Model):
     name = models.CharField(max_length=255)
@@ -95,6 +104,15 @@ class Athlete(models.Model):
         if not self.slug:
             self.slug = slugify(self.__unicode__())
         return super(Athlete, self).save(*args, **kwargs)
+
+    @property
+    def medals(self):
+        return {
+            'total': self.total_gold + self.total_silver + self.total_bronze,
+            'gold': self.total_gold,
+            'silver': self.total_silver,
+            'bronze': self.total_bronze
+        }
 
 
 class AthleteOlympicGame(models.Model):
@@ -115,6 +133,15 @@ class AthleteOlympicGame(models.Model):
             self.slug = slugify(self.__unicode__())
         return super(AthleteOlympicGame, self).save(*args, **kwargs)
 
+    @property
+    def medals(self):
+        return {
+            'total': self.total_gold + self.total_silver + self.total_bronze,
+            'gold': self.total_gold,
+            'silver': self.total_silver,
+            'bronze': self.total_bronze
+        }
+
 
 class CountryOlympicGame(models.Model):
     country = models.ForeignKey(Country)
@@ -132,6 +159,15 @@ class CountryOlympicGame(models.Model):
         if not self.slug:
             self.slug = slugify(self.__unicode__())
         return super(CountryOlympicGame, self).save(*args, **kwargs)
+
+    @property
+    def medals(self):
+        return {
+            'total': self.total_gold + self.total_silver + self.total_bronze,
+            'gold': self.total_gold,
+            'silver': self.total_silver,
+            'bronze': self.total_bronze
+        }
 
 
 class Event(models.Model):
