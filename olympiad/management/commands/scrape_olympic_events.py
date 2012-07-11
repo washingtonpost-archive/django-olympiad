@@ -182,7 +182,7 @@ class Command(BaseCommand):
                                         medal=event_dict['medal'],
                                         sport=sport,
                                         country=country)
-                                print u'* %s' % event
+                                print u'* Event: %s' % event
                             except Event.DoesNotExist:
                                 event = Event(**event_dict)
                                 event.olympic_game = olympic_game
@@ -191,7 +191,7 @@ class Command(BaseCommand):
                                 if classification == 'individual':
                                     event.athlete = athlete
                                 event.save()
-                                print u'+ %s' % event
+                                print u'+ Event: %s' % event
 
     def build_olympic_id_list(self):
         all_games_url = u'http://www.olympic.org/olympic-games'
