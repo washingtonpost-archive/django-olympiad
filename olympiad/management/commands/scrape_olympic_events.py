@@ -85,7 +85,9 @@ class Command(BaseCommand):
                             event_dict = {}
                             cells = row.select('td')
 
-                            print cells[4]
+                            print cells[4].select('img')
+                            print cells[4].select('img')[0]
+                            print cells[4].select('img')[0].attrs['alt']
 
                             # Medal
                             event_dict['medal'] = str(cells[4].select('img')[0].attrs['alt']).lower()
