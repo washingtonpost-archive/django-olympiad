@@ -69,7 +69,7 @@ class Command(BaseCommand):
                 if result_count % 250 > 0:
                     pages += 1
 
-                for page in pages:
+                for page in range(1, pages+1):
                     request = requests.get(
                         self.base_detail_url\
                         + classy_url\
