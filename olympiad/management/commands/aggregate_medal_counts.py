@@ -8,6 +8,8 @@ class Command(BaseCommand):
     is executed with manage.py or django-admin.py.
     """
 
+    integrity_errors = []
+
     def handle(self, *args, **kwargs):
         """ handle() is executed when the management command is run."""
 
@@ -34,10 +36,15 @@ class Command(BaseCommand):
                         ag.total_silver += 1
                     if event.medal.lower() == 'bronze':
                         ag.total_bronze += 1
+
                     ag.country = event.country
 
-                ag.save()
-                print ag, ag.medals
+                try:
+                    ag.save()
+                    print ag, ag.medals
+                except:
+                    self.integrity_errors.append(ag.__dict__)
+                    pass
 
     def aggregate_country_games(self):
         for game in OlympicGame.objects.all():
