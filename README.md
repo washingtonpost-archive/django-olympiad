@@ -1,3 +1,5 @@
+**Deprecated as of Dec. 31, 2012**
+
 # django-olympiad
 
 A lightweight toolkit for scraping, storing and aggregating Olympic medal counts.
